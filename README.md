@@ -1,2 +1,2 @@
 # tictactoe
-Tic Tac Toe Game with GUI using Qt
+Tic Tac Toe Game with GUI using PyQt5.
