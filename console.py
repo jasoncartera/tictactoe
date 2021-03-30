@@ -25,13 +25,14 @@ class Window(QMainWindow):
         # Showing all the widgets
         self.show()
 
+        # Initalize game
         self.game = tictactoe.TicTacToe()
 
     def UiComponents(self):
         # Create a push button list
         self.push_list = []
 
-        # creating 2d list
+        # creating 2d list of push buttons
         for _ in range(3):
             temp = []
             for _ in range(3):
@@ -50,13 +51,13 @@ class Window(QMainWindow):
                 # setting geometry to the button
                 self.push_list[i][j].setGeometry(x*i + 20, y*j + 20, 80, 80)
 
-                # setting fot to the button
+                # setting font to the button
                 self.push_list[i][j].setFont(QFont(QFont('Times', 17)))
 
-                # adding action
+                # adding action to the button
                 self.push_list[i][j].clicked.connect(self.action_called)
 
-        # creating label to tell the score
+        # creating label to display who wins
         self.label = QLabel(self)
 
         # setting geomoetry to the label
@@ -68,6 +69,7 @@ class Window(QMainWindow):
                                  "border : 2px solid black;"
                                  "background : white;"
                                  "}")
+        
         # setting label alignment
         self.label.setAlignment(Qt.AlignCenter)
 
@@ -81,13 +83,12 @@ class Window(QMainWindow):
         reset_game.setGeometry(50, 380, 200, 50)
 
         # adding action to reset the push button
-
         reset_game.clicked.connect(self.reset_game_action)
 
     # method called by reset button
     def reset_game_action(self):
 
-        # resetting game
+        # reinitalize game to reset 
         self.game = tictactoe.TicTacToe()
 
         # making label text empty
@@ -103,22 +104,26 @@ class Window(QMainWindow):
     
     # action called by the push buttons
     def action_called(self):
-        # getting button which called the action
+
+        # get the button that called the action
         button = self.sender()
 
         # disable button
         button.setEnabled(False)
 
-
+        # traverse through the buttons to get the coords of button (there is probably a better way to do this)
         for i in range(len(self.push_list)):
             for j in range(len(self.push_list)):
                 if button == self.push_list[i][j]:
                     move = (i, j)
                     break
         
+        # set the text of the button to X
         button.setText("X")
+        # make the move in the game
         self.game.make_move(self.game.get_X_player(), move)
 
+        # if the game is unfinished, make the AI move
         if self.game.get_status() == "UNFINISHED":
             game_object = copy.deepcopy(self.game)
             ai = MiniMax(game_object)
@@ -128,8 +133,10 @@ class Window(QMainWindow):
             button.setEnabled(False)
             self.game.make_move(self.game.get_O_player(), ai_move)
         
+        # determine if there is a win or draw
         win = self.game.get_status()
 
+        # set the game status label to empty text
         text = ""
 
         if win == "X_WON":
@@ -140,7 +147,6 @@ class Window(QMainWindow):
             text = "DRAW"
 
         self.label.setText(text)
-
 
 app = QApplication(sys.argv)
 
