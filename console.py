@@ -2,7 +2,9 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import copy
 import tictactoe
+from minimax import MiniMax
 import sys
 
 # Create window class
@@ -114,12 +116,17 @@ class Window(QMainWindow):
                     move = (i, j)
                     break
         
-        if self.game.get_current_player() == "X":
-            button.setText("X")
-            self.game.make_move(self.game.get_X_player(), move)
-        else:
+        button.setText("X")
+        self.game.make_move(self.game.get_X_player(), move)
+
+        if self.game.get_status() == "UNFINISHED":
+            game_object = copy.deepcopy(self.game)
+            ai = MiniMax(game_object)
+            ai_move = ai.minimax(game_object)
+            button = self.push_list[ai_move[0]][ai_move[1]]
             button.setText("O")
-            self.game.make_move(self.game.get_O_player(), move)
+            button.setEnabled(False)
+            self.game.make_move(self.game.get_O_player(), ai_move)
         
         win = self.game.get_status()
 
@@ -134,9 +141,6 @@ class Window(QMainWindow):
 
         self.label.setText(text)
 
-        
-
-        
 
 app = QApplication(sys.argv)
 
