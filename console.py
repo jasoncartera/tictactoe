@@ -119,7 +119,7 @@ class Window(QMainWindow):
                     break
         
         # set the text of the button to X
-        button.setText("X")
+        button.setText(self.game.get_X_player())
         # make the move in the game
         self.game.make_move(self.game.get_X_player(), move)
 
@@ -129,7 +129,7 @@ class Window(QMainWindow):
             ai = MiniMax(game_object)
             ai_move = ai.minimax(game_object)
             button = self.push_list[ai_move[0]][ai_move[1]]
-            button.setText("O")
+            button.setText(self.game.get_O_player())
             button.setEnabled(False)
             self.game.make_move(self.game.get_O_player(), ai_move)
         
