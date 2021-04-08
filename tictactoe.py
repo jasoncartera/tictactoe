@@ -28,6 +28,9 @@ class TicTacToe:
         else:
             return self._player_o
 
+    def get_board_size(self):
+        return self.board_size
+        
     # Add return X and O player for minimax
     def get_X_player(self):
         return self._player_x
