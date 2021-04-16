@@ -8,4 +8,4 @@ This games tictactoe implementation uses three files:
 - tictactoe.py: Class implementation of the tictactoe game logic
 
 <img src="https://github.com/jasoncartera/tictactoe/blob/main/Screen%20Recording%202021-04-16%20at%202.59.06%20PM.gif" width="312" height="600">
-![alt text](https://github.com/jasoncartera/tictactoe/blob/main/Screen%20Recording%202021-04-16%20at%202.59.06%20PM.gif?raw=true)
+
